@@ -1,4 +1,4 @@
-# An HTML SCSS and JAVASCIPT Playground for developers.
+# Set up code kata's in you local system
 
 I prefer this against online platforms for four main reasons :
 1. Its easier to use browsers dev tools to debug things
@@ -19,3 +19,21 @@ index.html and script.js is used as it is.
 JS files are not processed because most browsers supports latest JS features. In case you are an IE-11 user - you may consider using https://github.com/drupalastic/HTML-SCSS-JS-Starterkit 
 
 style.scss will be compiled to style.css. Browser will refresh automatically on change. 
+
+# Javascript code kata sets
+
+Most of the times we will be using chrome's console and dev tools. So this following setup works well.
+![](.README_images/editor-browser-setup.png)
+
+## JS Code kata 1. Implement a linear search using simple iterative loops.
+
+```$xslt
+function linerSearch(list, item) {
+  // your code here
+}
+
+console.log('liner search => ', linerSearch([2, 6, 7, 90, 103], 90));
+
+// it must log liner search => 3 (index of 90)
+```
+
