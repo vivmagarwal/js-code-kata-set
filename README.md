@@ -32,8 +32,20 @@ function linerSearch(list, item) {
   // your code here
 }
 
-console.log('liner search => ', linerSearch([2, 6, 7, 90, 103], 90));
+console.log('liner search result => ', linerSearch([2, 6, 7, 90, 103], 90));
 
 // it must log liner search => 3 (index of 90)
 ```
+
+## JS Code kata 2. Implement a binary search. We need cut our list to half on every iteration. 
+
+```$xslt
+function binarySearch(list, item) {
+
+}
+
+console.log('binary search result => ', binarySearch([2,6,7,90,103,105],90));
+// it must log the index of item in the list
+```
+
 
