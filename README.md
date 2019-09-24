@@ -63,12 +63,14 @@ console.log('binary search result => ', binarySearch([2,6,7,90,103,105],90));
 
 })();
 ```
+```$xslt
 Pseudo code :
 Initialize empty array
 compare the first index of l to first index of r
 push the lower value to the empty array
 shift (remove first) array with lower value
 repeat until both arrays are empty
+```
 
 
 
@@ -77,6 +79,8 @@ repeat until both arrays are empty
 ```$xslt
 
 ```
+
+```$xslt
 Pseudo code :                                       // O(n*logn)
 mergeSort(list)                                     // -- time complexity --
     initialize n to the length of the list          // constant
@@ -87,9 +91,14 @@ mergeSort(list)                                     // -- time complexity --
     mergeSort(left);                                // n/2
     mergeSort(right);                               // n/2
     mergeList(left,right);                          // linear
+
+```
     
 
 ### JS Code kata 5. Implement Bubble sort algorithm.
+
+Visualize bubble sort - https://www.hackerearth.com/practice/algorithms/sorting/bubble-sort/visualize/
+
 
     
 
