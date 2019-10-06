@@ -6,7 +6,7 @@ I prefer this against online platforms for four main reasons :
 3. Live reload / refresh is a real time saver
 4. I can use my favourite text editors live templates / snippets while practicing
 
-recommended node version : 12.3.1 (We recommend NVM)
+recommended node version : *12.3.1* (We recommend NVM)
 
 setup :
 clone the repository
@@ -101,4 +101,89 @@ Visualize bubble sort - https://www.hackerearth.com/practice/algorithms/sorting/
 
 
     
+
+### JS Code kata 6. Implement fizz buzz. A function takes any number. Console logs each of them but -
+when the number is multiple of 3 instead of number fizz is logged
+when the number is multiple of 5 instead of number buzz is logged
+when the number is multiple of both fizzBuzz is logged
+
+
+### JS Code kata 7. Implement a fakeAjax function that returns an array of books. consume that function to console log the list of books.
+
+
+### JS Code kata 8. Old and busted way of handling async data
+
+consider following fake ajax data function
+
+```
+// we pass in a file name and when ever it gets resolved, the callback is called with the resolved data
+function fakeAjaxData(file, cb) {
+
+  const fake_database = {
+    "file1": "The first text",
+    "file2": "The middle text",
+    "file3": "The last text"
+  };
+
+  console.log("Requesting data -> " + file);
+
+  if (file === "file1") {
+    setTimeout(function () {
+      cb(fake_database["file1"]);
+    }, 3000);
+  } else if (file === "file2") {
+    setTimeout(function () {
+      cb(fake_database["file2"]);
+    }, 1000);
+  } else {
+    setTimeout(function () {
+      cb(fake_database["file3"]);
+    }, 2000);
+  }
+}
+
+// *** helper function ***
+function output(text){
+  console.log(text);
+}
+
+```
+
+In case we make an ajax request with following lines of code, we'll get our data but in a different order. modify the below function to return the async data in order 
+like:
+the first text
+the second text
+the third text
+
+```
+function getFile(file){
+  fakeAjaxData(file, function (receivedData) {
+    console.log(receivedData);
+  })
+}
+
+getFile ( "file1");
+getFile ( "file2");
+getFile ( "file3");
+```
+
+
+### JS Code kata 9. Handling async data using thunk. Implement a thunk called getFile().
+
+Hint: Thunk is basically a closure function. It requests data & it returns a callback. If callback is called before it receives data, it saves the callback inside the closure and calls it once it gets the data. If it gets the data, it stores it inside the closure until the callback is called.
+
+### JS Code kata 10. Handling async data using native promise.
+
+Hint: our getFile function returns a promise. promises will be resolved in the getFile function and then we use `.then` to respond to them.
+
+
+### JS Code kata 11. Higher order function
+
+
+### JS Code kata 12. Make the promise chain in kata 10 reusable using map and reduce.
+
+
+
+
+
 

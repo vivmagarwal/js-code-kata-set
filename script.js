@@ -1,4 +1,74 @@
-(function kata1() {
+// we pass in a file name and when ever it gets resolved, the callback is called with the resolved data
+function fakeAjaxData(file, cb) {
+
+  const fake_database = {
+    "file1": "The first text",
+    "file2": "The middle text",
+    "file3": "The last text"
+  };
+
+  console.log("Requesting data -> " + file);
+
+  if (file === "file1") {
+    setTimeout(function () {
+      cb(fake_database["file1"]);
+    }, 3000);
+  } else if (file === "file2") {
+    setTimeout(function () {
+      cb(fake_database["file2"]);
+    }, 1000);
+  } else {
+    setTimeout(function () {
+      cb(fake_database["file3"]);
+    }, 5000);
+  }
+}
+
+function output(text){
+  console.log(text);
+}
+
+function getFile(file){
+  return new Promise(function promiseExecutor(resolve, reject){
+    fakeAjaxData(file, resolve); //resolving
+  })
+}
+
+const p1 = getFile("file1");
+const p2 = getFile("file2");
+const p3 = getFile("file3");
+
+p1.then(function (p1text) {
+  console.log(p1text) // responding
+}).then(function () {
+  return p2
+}).then(function (p2text) {
+  console.log(p2text)
+}).then(function () {
+  return p3
+}).then(function (p3text) {
+  console.log(p3text)
+});
+
+["file1","file2","file3"]
+  .map((file) => {
+    return getFile(file);
+  }).reduce((promiseChain, currentPromise) => {
+    return promiseChain
+      .then(() => (currentPromise))
+      .then((text) => console.log(text))
+  },Promise.resolve())
+  .then(() => console.log("completed."));
+
+
+
+
+
+
+
+/**
+
+ (function kata1() {
   // ***** Kata 1 *****
   // liner search using foreach iteration
   // time complexity - liner
@@ -15,7 +85,7 @@
   console.log('linear search result => ', linearSearch([2, 15, 35, 90, 115], 90));
 })();
 
-(function kata2() {
+ (function kata2() {
   // ***** Kata 2 *****
   // binary search solution for the same problem - the array is sorted
   // we want to make our list smaller every time
@@ -42,7 +112,7 @@
   console.log('binary search result => ', binarySearch([2, 6, 7, 90, 103, 105], 90));
 })();
 
-let kata3 = (function kata3() {
+ let kata3 = (function kata3() {
   // ***** kata 3 *****
   // Merging two sorted array - the result must be sorted as well
   // Pseudo code :
@@ -70,7 +140,7 @@ let kata3 = (function kata3() {
 
 })();
 
-let kata3b = (function kata3b() {
+ let kata3b = (function kata3b() {
   // Merge the two arrays: left and right
   function mergeList(left, right) {
     let resultArray = [], leftIndex = 0, rightIndex = 0;
@@ -97,7 +167,7 @@ let kata3b = (function kata3b() {
   return {mergeList: mergeList};
 })();
 
-(function kata4() {
+ (function kata4() {
   // Merge Sort Implementation (Recursion)
   function mergeSort(unsortedArray) {
     // No need to sort the array if the array only has one element or empty
@@ -120,7 +190,7 @@ let kata3b = (function kata3b() {
   console.log('merge sort kata4 => ', mergeSort([9, 3, 5, 8, 25, 20, 40, 45, 50]))
 })();
 
-(function kata5a() {
+ (function kata5a() {
   // bubble sort - naive solution - not optimized
 
   // helper swap function
@@ -153,7 +223,7 @@ let kata3b = (function kata3b() {
   console.log('bubble sort basic => ', bubbleSortBasic([3, 5, 8, 25, 20, 40, 45, 50]));
 })();
 
-(function kata5b() {
+ (function kata5b() {
   // helper swap function
   function swap(array, i, j) {
     let temp = array[i];
@@ -193,3 +263,280 @@ let kata3b = (function kata3b() {
 
 
 
+ (function kata6() {
+  let fizzBuzz = function (num) {
+
+    for (let i = 1; i <= num; i++) {
+      if (i % 3 === 0 && i % 5 == 0){
+        console.log('FizzBuzz');
+      } else if (i % 3 === 0) {
+        console.log('Fizz');
+      } else if (i % 5 === 0) {
+        console.log('Buzz');
+      } else {
+        console.log(i);
+      }
+    }
+  };
+
+  console.log(fizzBuzz(5))
+})();
+
+
+
+ (function kata7() {
+
+  function fakeAjax(cb){ // after 500ms fakeAjax runs cb with some parameters
+    setTimeout(function(){
+      cb(['book1' , 'book2']);
+    },500);
+  }
+
+  fakeAjax(function(numList){
+    for (let num of numList) {
+      console.log(num);
+    }
+  });
+
+})();
+
+
+
+(function kata8() {
+
+  // we pass in a file name and when ever it gets resolved, the callback is called with the resolved data
+  function fakeAjaxData(file, cb) {
+
+    const fake_database = {
+      "file1": "The first text",
+      "file2": "The middle text",
+      "file3": "The last text"
+    };
+
+    console.log("Requesting data -> " + file);
+
+    if (file === "file1") {
+      setTimeout(function () {
+        cb(fake_database["file1"]);
+      }, 3000);
+    } else if (file === "file2") {
+      setTimeout(function () {
+        cb(fake_database["file2"]);
+      }, 1000);
+    } else {
+      setTimeout(function () {
+        cb(fake_database["file3"]);
+      }, 2000);
+    }
+  }
+
+// *** helper function ***
+  function output(text){
+    console.log(text);
+  }
+
+// *** the old and busted callback way ***
+  var responses = {};
+
+  function getFile(file){
+    fakeAjaxData(file, function (receivedData) {
+      if (!(file in responses)){
+        responses[file] = receivedData;
+      }
+
+      const filenames = ["file1", "file2", "file3"];
+      // render part here
+      for (let i = 0; i < filenames.length; i++) {
+        if (filenames[i] in responses) {
+          output(responses[filenames[i]]);
+        } else {
+          console.log('returning...');
+          return;
+        }
+      }
+
+      console.log('complete');
+    })
+  }
+
+  getFile ( "file1");
+  getFile ( "file2");
+  getFile ( "file3");
+
+})();
+
+
+
+(function kata9() {
+
+  // we pass in a file name and when ever it gets resolved, the callback is called with the resolved data
+  function fakeAjaxData(file, cb) {
+
+    const fake_database = {
+      "file1": "The first text",
+      "file2": "The middle text",
+      "file3": "The last text"
+    };
+
+    console.log("Requesting data -> " + file);
+
+    if (file === "file1") {
+      setTimeout(function () {
+        cb(fake_database["file1"]);
+      }, 6000);
+    } else if (file === "file2") {
+      setTimeout(function () {
+        cb(fake_database["file2"]);
+      }, 2000);
+    } else {
+      setTimeout(function () {
+        cb(fake_database["file3"]);
+      }, 10000);
+    }
+  }
+
+
+  function getFile(file){
+    var text, fn;
+
+    fakeAjaxData(file,function (response) {
+      console.log(file,'inside call to fake ajax');
+      if (fn) fn(response);
+      else text = response;
+    });
+
+    return function (cb) {
+      console.log(file,'inside return function');
+      if (text) cb(text);
+      else fn = cb;
+    };
+  }
+
+  var thunk1 = getFile("file1");
+  var thunk2 = getFile("file2");
+  var thunk3 = getFile("file3");
+
+
+  thunk1(function (text1) {
+    console.log(text1);
+    thunk2(function (text2) {
+      console.log(text2);
+      thunk3(function (text3) {
+        console.log(text3);
+        console.log('complete!');
+      });
+    });
+  });
+
+})();
+
+
+ (function kata10() {
+  function fakeAjaxData(file, cb) {
+
+    const fake_database = {
+      "file1": "The first text",
+      "file2": "The middle text",
+      "file3": "The last text"
+    };
+
+    console.log("Requesting data -> " + file);
+
+    if (file === "file1") {
+      setTimeout(function () {
+        cb(fake_database["file1"]);
+      }, 3000);
+    } else if (file === "file2") {
+      setTimeout(function () {
+        cb(fake_database["file2"]);
+      }, 1000);
+    } else {
+      setTimeout(function () {
+        cb(fake_database["file3"]);
+      }, 5000);
+    }
+  }
+
+  function getFile(file){
+    return new Promise(function promiseExecutor(resolve, reject){
+      fakeAjaxData(file, resolve); //resolving
+    })
+  }
+
+  const p1 = getFile("file1");
+  const p2 = getFile("file2");
+  const p3 = getFile("file3");
+
+  p1.then(function (p1text) {
+    console.log(p1text) // responding
+  }).then(function () {
+    return p2
+  }).then(function (p2text) {
+    console.log(p2text)
+  }).then(function () {
+    return p3
+  }).then(function (p3text) {
+    console.log(p3text)
+  });
+})();
+
+
+ //higher order functions practice.
+ (function kata11() {
+  const companies = [
+    {name: "Company One", category: "Finance", start: 1981, end: 2003},
+    {name: "Company Two", category: "Retail", start: 1992, end: 2008},
+    {name: "Company Three", category: "Auto", start: 1999, end: 2007},
+    {name: "Company Four", category: "Retail", start: 1989, end: 2010},
+    {name: "Company Five", category: "Technology", start: 2009, end: 2014},
+    {name: "Company Six", category: "Finance", start: 1987, end: 2010},
+    {name: "Company Seven", category: "Auto", start: 1986, end: 1996},
+    {name: "Company Eight", category: "Technology", start: 2011, end: 2016},
+    {name: "Company Nine", category: "Retail", start: 1981, end: 1989}
+  ];
+
+  const ages = [33, 12, 20, 16, 5, 54, 21, 44, 61, 13, 15, 45, 25, 64, 32];
+
+  // use forEach to log all the company names.
+
+  companies.forEach((company, index, companies) => {
+    console.log(company.name);
+  });
+
+  // use filter to get a new array of ages that are more than or equal to 21.
+  const newAges = ages.filter((age) => (age >= 21));
+  console.log(newAges);
+
+  // filter retail companies
+  const retailCompanies = companies.filter((company) => (company.category == "Retail"));
+  console.log(retailCompanies);
+
+  // using map, create a new array of company names
+  const companyNamesArray = companies.map((company) => (company.name ));
+  console.log(companyNamesArray);
+
+  // using map chain, create a new array of ages. subtract each age by 4 and then add text years old to each item.
+  const youngByFourYears = ages.map((age) => (age-4)).map((age) => (`${age} ${age>1 ? "Years old" : "Year old" } `));
+  console.log(youngByFourYears);
+
+  // sort companies by their start date ascending
+  const sortedByYear = companies.sort((a,b) => ((a.start > b.start) ? 1 : -1));
+  console.log(sortedByYear);
+
+  // sort ages asc
+  const sortedAges = ages.sort((a,b) => ((a > b) ? 1 : -1));
+  console.log(sortedAges);
+
+  // use reduce to add all the ages together.
+  const ageSum = ages.reduce((total, currentValue, currentIndex, array) => {
+    return total + currentValue;
+  },0);
+
+  console.log(ageSum);
+
+})();
+
+
+
+
+ **/

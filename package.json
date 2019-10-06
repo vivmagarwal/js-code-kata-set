@@ -7,6 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "web-pack": "webpack --config webpack.config.js"
   },
+  "eslintConfig": {
+    "rules": {
+      "no-var": 0
+    }
+  },
   "author": "Vivek Agarwal",
   "license": "ISC",
   "dependencies": {
