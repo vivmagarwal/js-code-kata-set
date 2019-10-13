@@ -24,46 +24,53 @@ function fakeAjaxData(file, cb) {
   }
 }
 
-function output(text){
+function output(text) {
   console.log(text);
 }
 
-function getFile(file){
-  return new Promise(function promiseExecutor(resolve, reject){
-    fakeAjaxData(file, resolve); //resolving
-  })
+function* generator () { // declaring a generator
+  var x = 1 + (yield);
+  var y = 1 + (yield);
+  yield (x+y);
 }
 
-const p1 = getFile("file1");
-const p2 = getFile("file2");
-const p3 = getFile("file3");
+var genIt = generator(); // it produces and iterator
 
-p1.then(function (p1text) {
-  console.log(p1text) // responding
-}).then(function () {
-  return p2
-}).then(function (p2text) {
-  console.log(p2text)
-}).then(function () {
-  return p3
-}).then(function (p3text) {
-  console.log(p3text)
+genIt.next(); // runs the genrator function for the first time
+genIt.next(10);
+console.log(genIt.next(30));
+
+function* mainGenerator(){
+  yield 1;
+  a = 12+ (yield);
+  yield a;
+  yield 2;
+  yield 3;
+}
+
+var mainIterator = mainGenerator();
+
+console.log(mainIterator.next()); // returning yield
+console.log(mainIterator.next(12)); // setting yield
+console.log(mainIterator.next()); // reurnin yield
+console.log(mainIterator.next());
+
+function coroutine(g){
+  var it = g();
+  return function(){
+    return it.next.apply(it, arguments);
+  }
+}
+
+var run = coroutine(function*(){
+  var x = 1+(yield);
+  var y = 1+(yield);
+  yield (x+y);
 });
 
-["file1","file2","file3"]
-  .map((file) => {
-    return getFile(file);
-  }).reduce((promiseChain, currentPromise) => {
-    return promiseChain
-      .then(() => (currentPromise))
-      .then((text) => console.log(text))
-  },Promise.resolve())
-  .then(() => console.log("completed."));
-
-
-
-
-
+run();
+run(10);
+console.log(run(30));
 
 
 /**
@@ -302,7 +309,7 @@ p1.then(function (p1text) {
 
 
 
-(function kata8() {
+ (function kata8() {
 
   // we pass in a file name and when ever it gets resolved, the callback is called with the resolved data
   function fakeAjaxData(file, cb) {
@@ -367,7 +374,7 @@ p1.then(function (p1text) {
 
 
 
-(function kata9() {
+ (function kata9() {
 
   // we pass in a file name and when ever it gets resolved, the callback is called with the resolved data
   function fakeAjaxData(file, cb) {
@@ -467,6 +474,14 @@ p1.then(function (p1text) {
   const p2 = getFile("file2");
   const p3 = getFile("file3");
 
+  // p1
+  // .then((p1text) => console.log(p1text))
+  // .then(() => p2)
+  // .then((p2text) => console.log(p2text))
+  // .then(() => p3)
+  // .then((p3Text) => console.log(p3Text))
+  // .then(() => console.log('completed'));
+
   p1.then(function (p1text) {
     console.log(p1text) // responding
   }).then(function () {
@@ -535,6 +550,73 @@ p1.then(function (p1text) {
   console.log(ageSum);
 
 })();
+
+
+ (function kata12() {
+  // we pass in a file name and when ever it gets resolved, the callback is called with the resolved data
+  function fakeAjaxData(file, cb) {
+
+    const fake_database = {
+      "file1": "The first text",
+      "file2": "The middle text",
+      "file3": "The last text"
+    };
+
+    console.log("Requesting data -> " + file);
+
+    if (file === "file1") {
+      setTimeout(function () {
+        cb(fake_database["file1"]);
+      }, 3000);
+    } else if (file === "file2") {
+      setTimeout(function () {
+        cb(fake_database["file2"]);
+      }, 1000);
+    } else {
+      setTimeout(function () {
+        cb(fake_database["file3"]);
+      }, 5000);
+    }
+  }
+
+  function output(text){
+    console.log(text);
+  }
+
+  function getFile(file){
+    return new Promise(function promiseExecutor(resolve, reject){
+      fakeAjaxData(file, resolve); //resolving
+    })
+  }
+
+// const p1 = getFile("file1");
+// const p2 = getFile("file2");
+// const p3 = getFile("file3");
+//
+// p1.then(function (p1text) {
+//   console.log(p1text) // responding
+// }).then(function () {
+//   return p2
+// }).then(function (p2text) {
+//   console.log(p2text)
+// }).then(function () {
+//   return p3
+// }).then(function (p3text) {
+//   console.log(p3text)
+// });
+
+  ["file1","file2","file3"]
+    .map((file) => {
+      return getFile(file);
+    }).reduce((promiseChain, currentPromise) => {
+    return promiseChain
+      .then(() => (currentPromise))
+      .then((text) => console.log(text))
+  },Promise.resolve())
+    .then(() => console.log("completed."));
+
+})();
+
 
 
 

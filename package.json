@@ -19,11 +19,13 @@
     "gulp-sourcemaps": "^2.6.5",
     "jquery": "^3.4.1",
     "normalize.css": "^8.0.1",
+    "require.js": "^1.0.0",
     "webpack": "latest"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
     "@babel/preset-env": "^7.6.0",
+    "@types/node": "^12.7.11",
     "babel-loader": "^8.0.6",
     "browser-sync": "^2.26.7",
     "gulp": "^4.0.2",

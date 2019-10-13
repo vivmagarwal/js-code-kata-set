@@ -182,8 +182,24 @@ Hint: our getFile function returns a promise. promises will be resolved in the g
 
 ### JS Code kata 12. Make the promise chain in kata 10 reusable using map and reduce.
 
-
-
+replace these lines of code :
+```
+// const p1 = getFile("file1");
+// const p2 = getFile("file2");
+// const p3 = getFile("file3");
+//
+// p1.then(function (p1text) {
+//   console.log(p1text) // responding
+// }).then(function () {
+//   return p2
+// }).then(function (p2text) {
+//   console.log(p2text)
+// }).then(function () {
+//   return p3
+// }).then(function (p3text) {
+//   console.log(p3text)
+// });
+```
 
 
 

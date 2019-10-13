@@ -90,7 +90,7 @@ Ans. Using `!!` or `Boolean()`
 
 ### What's the difference between `==` and `===` .
 
-Ans. `==` allows coercion ; `===` doesnot allow coercion;
+Ans. `==` allows coercion ; `===` does not allow coercion;
 
 
 ### State true of false - when types are same , `==` and `===` do the same thing. 
@@ -103,7 +103,7 @@ Ans. true
 
 null and undefined both are falsy value and both are coerced to false. hence the above expression returns true.
 
-however, `console.log(null === undefined);` will return false because `===` doesnot allow coercion and types of null and undefined are different . type of null is object whereas undefined is undefined.
+however, `console.log(null === undefined);` will return false because `===` does not allow coercion and types of null and undefined are different . type of null is object whereas undefined is undefined.
 
 ### What's the difference between undeclared and undefined
 
