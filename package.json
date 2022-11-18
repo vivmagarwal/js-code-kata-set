@@ -34,6 +34,6 @@
     "gulp-watch": "^5.0.1",
     "node-sass": "^4.12.0",
     "webpack": "^4.40.2",
-    "webpack-cli": "^3.3.9"
+    "webpack-cli": "^3.3.12"
   }
 }
